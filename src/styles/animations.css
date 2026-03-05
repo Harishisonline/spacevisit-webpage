@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans bg-primary text-white overflow-x-hidden;
+    background-image: 
+      radial-gradient(1px 1px at 20px 30px, #ffffff 100%, transparent),
+      radial-gradient(1px 1px at 40px 70px, #ffffff 100%, transparent),
+      radial-gradient(1px 1px at 50px 160px, #ffffff 100%, transparent),
+      radial-gradient(1px 1px at 90px 40px, #ffffff 100%, transparent),
+      radial-gradient(1px 1px at 130px 80px, #ffffff 100%, transparent),
+      radial-gradient(1px 1px at 160px 120px, #ffffff 100%, transparent);
+    background-repeat: repeat;
+    background-size: 200px 200px;
+  }
+}
+
+.text-shadow-glow {
+  text-shadow: 0 0 10px rgba(102, 252, 241, 0.7);
+}
+
+.box-shadow-glow {
+  box-shadow: 0 0 15px rgba(102, 252, 241, 0.3);
+}
+
+/* Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes orbit {
+  0% { transform: rotate(0deg) translateX(50px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(50px) rotate(-360deg); }
+}
+
+.animate-orbit {
+  animation: orbit 20s linear infinite;
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 10px rgba(69, 162, 158, 0.4); }
+  50% { box-shadow: 0 0 25px rgba(102, 252, 241, 0.8); }
+  100% { box-shadow: 0 0 10px rgba(69, 162, 158, 0.4); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s infinite;
+}
+
+@keyframes launch {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  20% { transform: translateY(10px) scale(0.98); opacity: 1; }
+  100% { transform: translateY(-150vh) scale(1.2); opacity: 0; }
+}
+
+.animate-launch {
+  animation: launch 2s cubic-bezier(0.5, 0, 0.2, 1) forwards;
+}
+
+@keyframes flame-flicker {
+  0%, 100% { transform: scaleY(1); opacity: 0.8; }
+  50% { transform: scaleY(1.2); opacity: 1; }
+}
+
+.animate-flame {
+  animation: flame-flicker 0.1s infinite alternate;
+}
+
+/* Star flicker */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+.animate-twinkle {
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+/* Space Fabric */
+@keyframes mesh-wave {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+
+.space-fabric {
+  background: linear-gradient(90deg, rgba(69, 162, 158, 0.05) 1px, transparent 1px),
+              linear-gradient(rgba(69, 162, 158, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: mesh-wave 20s linear infinite;
+}
+
+/* Galaxy Swirl */
+@keyframes swirl {
+  0% { transform: rotate(0deg); opacity: 0.3; }
+  50% { opacity: 0.6; }
+  100% { transform: rotate(360deg); opacity: 0.3; }
+}
+
+.animate-swirl {
+  animation: swirl 60s linear infinite;
+}
