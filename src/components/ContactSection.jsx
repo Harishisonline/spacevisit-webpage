@@ -43,7 +43,7 @@ const ContactSection = () => {
           </a>
 
           <a 
-            href="https://linkedin.com/in/HarishPradhan" 
+            href="https://www.linkedin.com/in/harishpradhan0131/" 
             target="_blank" 
             rel="noopener noreferrer"
             className="group flex flex-col items-center gap-3 transition-transform hover:scale-110"
