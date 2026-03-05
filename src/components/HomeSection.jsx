@@ -82,7 +82,7 @@ const HomeSection = () => {
         <Planet 
           name="THE MOON"
           videoSrc={`${import.meta.env.BASE_URL}planets/moon.mp4`}
-          className="top-[5%] right-[10%] md:top-[10%] md:right-[15%] w-24 h-24 md:w-32 md:h-32" 
+          className="top-[15%] right-[10%] md:top-[20%] md:right-[15%] w-24 h-24 md:w-32 md:h-32" 
           delay="4s" 
         />
       </div>

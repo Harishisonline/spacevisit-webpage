@@ -59,18 +59,18 @@ const HeroSplash = () => {
           </div>
           
           {/* Engine Base */}
-          <div className="w-16 h-4 bg-gray-600 rounded-b-md z-20 border-t border-gray-700"></div>
+          <div className="w-16 h-4 bg-gray-600 rounded-b-md z-20 border-t border-gray-700 relative">
+            {/* Flame Trail */}
+            {launched && (
+              <div className="absolute top-4 left-1/2 -translate-x-1/2 w-10 h-40 bg-gradient-to-t from-transparent via-red-500 to-yellow-300 rounded-b-full animate-flame origin-top blur-[2px]"></div>
+            )}
+          </div>
           
           {/* Fins */}
-          <div className="absolute bottom-6 w-32 flex justify-between z-0">
+          <div className="absolute bottom-6 w-32 flex justify-between z-0 pointer-events-none">
             <div className="w-8 h-16 bg-gray-500 rounded-tl-[100%] rounded-bl-md transform origin-right -skew-y-[20deg] shadow-lg"></div>
             <div className="w-8 h-16 bg-gray-500 rounded-tr-[100%] rounded-br-md transform origin-left skew-y-[20deg] shadow-lg"></div>
           </div>
-
-          {/* Flame Trail */}
-          {launched && (
-            <div className="w-10 h-40 bg-gradient-to-t from-transparent via-red-500 to-yellow-300 rounded-b-full animate-flame origin-top blur-[2px] mt-1"></div>
-          )}
         </div>
       </div>
     </div>
