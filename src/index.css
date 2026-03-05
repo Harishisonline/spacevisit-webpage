@@ -97,6 +97,16 @@
   animation: mesh-wave 20s linear infinite;
 }
 
+/* Planet Texture Mapping */
+@keyframes spin-texture {
+  from { background-position: 0 0; }
+  to { background-position: 200% 0; }
+}
+
+.planet-texture {
+  background-size: auto 100%;
+  animation: spin-texture 30s linear infinite;
+}
 /* Galaxy Swirl */
 @keyframes swirl {
   0% { transform: rotate(0deg); opacity: 0.3; }

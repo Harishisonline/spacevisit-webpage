@@ -5,7 +5,7 @@ const planetsData = {
   earth: {
     name: "EARTH",
     color: "#00f2fe",
-    bgClass: "bg-[radial-gradient(circle_at_30%_30%,#4facfe,#00f2fe,#000046)]",
+    texture: "textures/earth.jpg",
     layers: [
       { name: "Crust", radius: "0 - 70 km", temp: "Ambient to 1000°C", comp: "Silicate rock, Oxygen, Silicon" },
       { name: "Mantle", radius: "70 - 2890 km", temp: "1000°C to 3700°C", comp: "Solid silicate rock" },
@@ -16,7 +16,7 @@ const planetsData = {
   jupiter: {
     name: "JUPITER",
     color: "#fda085",
-    bgClass: "bg-[radial-gradient(circle_at_30%_30%,#f6d365,#fda085,#804000)]",
+    texture: "textures/jupiter.jpg",
     layers: [
       { name: "Atmosphere", radius: "Outer 50 km", temp: "-145°C", comp: "Hydrogen, Helium, Ammonia clouds" },
       { name: "Liquid Mantle", radius: "50 - 21000 km", temp: "Up to 10,000°C", comp: "Liquid Hydrogen" },
@@ -27,7 +27,7 @@ const planetsData = {
   moon: {
     name: "THE MOON",
     color: "#8ec5fc",
-    bgClass: "bg-[radial-gradient(circle_at_30%_30%,#ffffff,#8ec5fc,#333333)]",
+    texture: "textures/moon.jpg",
     layers: [
       { name: "Crust", radius: "0 - 50 km", temp: "-173°C to 127°C", comp: "Oxygen, Silicon, Magnesium" },
       { name: "Mantle", radius: "50 - 1350 km", temp: "Unknown (Solid)", comp: "Olivine, Pyroxene" },
@@ -69,20 +69,31 @@ const PlanetModal = ({ planetId, onClose }) => {
           <X size={28} />
         </button>
 
-        {/* Left Side: Animated Planet Splitting */}
+        {/* Left Side: Realistic Texture Slice Splitting */}
         <div className="flex-1 flex flex-col items-center justify-center min-h-[300px] border-b md:border-b-0 md:border-r border-white/10 pb-8 md:pb-0 md:pr-8">
           <h3 
-            className="text-3xl font-space font-bold mb-12 tracking-widest"
+            className="text-3xl font-space font-bold mb-12 tracking-widest uppercase"
             style={{ color: planet.color, textShadow: `0 0 15px ${planet.color}80` }}
           >
             {planet.name} ANATOMY
           </h3>
           
           <div className="relative w-48 h-48 md:w-64 md:h-64 flex items-center justify-center">
+            {/* The outer realistic crust slice */}
+            <div 
+              className="absolute w-full h-full rounded-full planet-texture shadow-[inset_-20px_-20px_40px_rgba(0,0,0,0.9)] transition-all duration-1000 ease-out z-50 flex items-center justify-center"
+              style={{
+                backgroundImage: `url(${import.meta.env.BASE_URL}${planet.texture})`,
+                transform: `translateX(${animateLayers ? '-40px' : '0px'}) rotateY(${animateLayers ? '-30deg' : '0deg'}) scale(${animateLayers ? 0.9 : 1})`,
+                clipPath: animateLayers ? 'polygon(0 0, 50% 0, 50% 100%, 0 100%)' : 'none',
+              }}
+            ></div>
+
+            {/* The internal core layers */}
             {planet.layers.map((layer, index) => {
-              // Calculate expanding radii and positions
               const size = 100 - (index * 20); // 100%, 80%, 60%, 40%
-              const yOffset = animateLayers ? (index - 1.5) * 40 : 0; // split apart vertically
+              // Only offset the inner layers to the right
+              const xOffset = animateLayers ? 20 + (index * 15) : 0; 
               
               return (
                 <div 
@@ -91,15 +102,19 @@ const PlanetModal = ({ planetId, onClose }) => {
                   style={{
                     width: `${size}%`,
                     height: `${size}%`,
-                    background: `linear-gradient(to bottom, ${planet.color}, #111)`,
-                    transform: `translateY(${yOffset}px)`,
-                    opacity: animateLayers ? 1 : 0.5,
-                    zIndex: 10 - index
+                    background: index === 0 ? '#111' : `radial-gradient(circle at center, ${planet.color}, #111)`, // Dark outer mantle, bright inner
+                    transform: `translateX(${xOffset}px) rotateY(${animateLayers ? '20deg' : '0deg'}) scale(${animateLayers ? 0.9 : 1})`,
+                    opacity: animateLayers ? 1 : 0,
+                    zIndex: 40 - index
                   }}
                 >
-                  <span className="text-[10px] md:text-xs font-space font-bold opacity-70 tracking-widest absolute -right-4 translate-x-full">
-                    {layer.name}
-                  </span>
+                  {animateLayers && (
+                    <div className="absolute w-full border-t border-dashed border-white/30" style={{ transform: 'translateX(100%)', width: '40px', right: 0 }}>
+                      <span className="text-[10px] md:text-xs font-space font-bold opacity-70 tracking-widest absolute -right-2 translate-x-full -top-2 whitespace-nowrap">
+                        {layer.name}
+                      </span>
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -170,11 +185,11 @@ const CSSPlanet = ({ id, className, delay, onClick }) => {
           }}
         ></div>
         
-        {/* Pure CSS Planet Sphere */}
+        {/* Pure CSS Planet Sphere with Realistic Texture Map */}
         <div 
-          className={`w-full h-full rounded-full shadow-[inset_-20px_-20px_40px_rgba(0,0,0,0.8),_0_0_20px_rgba(255,255,255,0.1)] ${planet.bgClass} transition-transform duration-10000 linear`}
+          className="w-full h-full rounded-full shadow-[inset_-20px_-20px_40px_rgba(0,0,0,0.9),_0_0_20px_rgba(255,255,255,0.1)] planet-texture transition-transform duration-10000 linear"
           style={{ 
-            animation: 'spin 30s linear infinite',
+            backgroundImage: `url(${import.meta.env.BASE_URL}${planet.texture})`,
             transformStyle: 'preserve-3d'
           }}
         ></div>
