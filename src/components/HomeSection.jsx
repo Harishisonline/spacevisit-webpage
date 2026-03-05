@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import earthVideo from '../assets/planets/earth.mp4';
-import jupiterVideo from '../assets/planets/jupiter.mp4';
-import moonVideo from '../assets/planets/moon.mp4';
 
 const Planet = ({ videoSrc, name, className, delay }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -72,19 +69,19 @@ const HomeSection = () => {
       <div className="absolute inset-0 pointer-events-auto">
         <Planet 
           name="EARTH"
-          videoSrc={earthVideo} 
+          videoSrc="planets/earth.mp4" 
           className="top-[15%] left-[5%] md:left-[10%] w-48 h-48 md:w-64 md:h-64" 
           delay="0s" 
         />
         <Planet 
           name="JUPITER"
-          videoSrc={jupiterVideo} 
+          videoSrc="planets/jupiter.mp4" 
           className="bottom-[10%] right-[2%] md:right-[10%] w-64 h-64 md:w-96 md:h-96" 
           delay="2s" 
         />
         <Planet 
           name="THE MOON"
-          videoSrc={moonVideo} // Falling back to earth video if moon video is missing
+          videoSrc="planets/moon.mp4"
           className="top-[45%] right-[20%] md:right-[30%] w-24 h-24 md:w-32 md:h-32" 
           delay="4s" 
         />
