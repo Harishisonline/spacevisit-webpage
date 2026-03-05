@@ -10,7 +10,7 @@ const PricingSection = () => {
         muted 
         playsInline
         className="absolute inset-0 w-full h-full object-cover z-0 opacity-50 mix-blend-screen pointer-events-none"
-        src="pricing-bg.mp4"
+        src={`${import.meta.env.BASE_URL}pricing-bg.mp4`}
       />
       {/* Dark overlay to ensure text remains readable */}
       <div className="absolute inset-0 bg-primary/40 z-0 pointer-events-none"></div>
