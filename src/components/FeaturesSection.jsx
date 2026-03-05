@@ -9,9 +9,18 @@ const FeaturesSection = () => {
   ];
 
   return (
-    <section id="features" className="relative min-h-screen py-24 px-4 flex flex-col justify-center">
-      {/* Space Fabric Background */}
-      <div className="absolute inset-0 space-fabric opacity-50 z-0 pointer-events-none"></div>
+    <section id="features" className="relative min-h-screen py-24 px-4 flex flex-col justify-center overflow-hidden">
+      {/* Space Fabric Video Background */}
+      <video 
+        autoPlay 
+        loop 
+        muted 
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0 opacity-40 mix-blend-screen pointer-events-none"
+        src="fabric.mp4"
+      />
+      {/* Dark overlay to ensure text remains readable */}
+      <div className="absolute inset-0 bg-primary/60 z-0 pointer-events-none"></div>
 
       <div className="relative z-10 container mx-auto">
         <h2 className="text-4xl md:text-5xl font-space font-bold text-center mb-16 text-highlight text-shadow-glow" data-aos="fade-up">

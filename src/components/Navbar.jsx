@@ -36,7 +36,7 @@ const Navbar = () => {
         <div className="hidden sm:flex items-center gap-8 text-white font-sans text-lg">
           <button onClick={() => scrollTo("home")} className="hover:text-highlight transition-colors duration-300">Home</button>
           <button onClick={() => scrollTo("features")} className="hover:text-highlight transition-colors duration-300">Features</button>
-          <button onClick={() => scrollTo("pricing")} className="hover:text-highlight transition-colors duration-300">Pricing</button>
+          <button onClick={() => scrollTo("pricing")} className="hover:text-highlight transition-colors duration-300">Price</button>
           <button onClick={() => scrollTo("contact")} className="hover:text-highlight transition-colors duration-300">Contact Us</button>
         </div>
       </div>

@@ -3,10 +3,17 @@ import React from 'react';
 const PricingSection = () => {
   return (
     <section id="pricing" className="relative min-h-screen flex items-center justify-center py-20 px-4 overflow-hidden">
-      {/* Galaxy Swirl Background */}
-      <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-30">
-        <div className="w-[800px] h-[800px] rounded-full bg-gradient-to-tr from-accent/10 via-transparent to-highlight/10 blur-3xl animate-swirl"></div>
-      </div>
+      {/* Galaxy Swirl Video Background */}
+      <video 
+        autoPlay 
+        loop 
+        muted 
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0 opacity-50 mix-blend-screen pointer-events-none"
+        src="pricing-bg.mp4"
+      />
+      {/* Dark overlay to ensure text remains readable */}
+      <div className="absolute inset-0 bg-primary/40 z-0 pointer-events-none"></div>
 
       <div className="relative z-10 text-center max-w-4xl" data-aos="zoom-in" data-aos-duration="1500">
         <h2 className="text-3xl md:text-5xl font-space font-bold text-white mb-10 tracking-widest uppercase text-shadow-glow">

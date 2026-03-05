@@ -1,16 +1,96 @@
-import React from 'react';
+import React, { useState } from 'react';
+import earthVideo from '../assets/planets/earth.mp4';
+import jupiterVideo from '../assets/planets/jupiter.mp4';
+import moonVideo from '../assets/planets/moon.mp4';
+
+const Planet = ({ videoSrc, name, className, delay }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <div 
+      className={`absolute cursor-pointer transition-all duration-500 ease-in-out z-10 ${className} ${isHovered ? 'scale-110 z-20' : ''} animate-float`}
+      style={{ animationDelay: delay }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={() => setIsHovered(true)}
+      onTouchEnd={() => setIsHovered(false)}
+    >
+      <div className="relative w-full h-full flex items-center justify-center">
+        {/* The Aura Glow Effect - triggers on hover */}
+        <div 
+          className={`absolute inset-0 rounded-full transition-all duration-700 ease-out pointer-events-none
+            ${isHovered ? 'opacity-100 scale-125 box-shadow-glow bg-highlight/10 blur-xl' : 'opacity-0 scale-100 blur-none'}
+          `}
+        ></div>
+        
+        {/* The Planet Video - using screen blend mode to hide black background */}
+        <video 
+          src={videoSrc}
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          className="w-full h-full object-cover rounded-full mix-blend-screen pointer-events-none"
+          style={{ mixBlendMode: 'screen', filter: 'contrast(1.2) brightness(1.1)' }}
+        />
+
+        {/* Tooltip Name */}
+        <div 
+          className={`absolute -top-12 bg-secondary/90 border border-highlight text-highlight font-space font-bold px-4 py-2 rounded-lg whitespace-nowrap transition-all duration-300 pointer-events-none
+            ${isHovered ? 'opacity-100 translate-y-0 text-shadow-glow' : 'opacity-0 translate-y-4'}
+          `}
+        >
+          {name}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const HomeSection = () => {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden py-20 px-4">
-      {/* Floating Planets Background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[20%] left-[10%] w-64 h-64 rounded-full bg-gradient-to-br from-secondary to-primary border border-accent/20 animate-float" style={{ animationDelay: '0s' }}></div>
-        <div className="absolute bottom-[20%] right-[10%] w-96 h-96 rounded-full bg-gradient-to-tr from-secondary to-primary border border-highlight/10 animate-float" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-[40%] right-[30%] w-32 h-32 rounded-full bg-gradient-to-bl from-accent/20 to-primary border border-accent/30 animate-float" style={{ animationDelay: '4s' }}></div>
+      {/* Twinkling Stars Background specifically for Home Section */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        {[...Array(50)].map((_, i) => (
+          <div 
+            key={i}
+            className="absolute bg-white rounded-full animate-twinkle"
+            style={{
+              width: Math.random() * 2 + 1 + 'px',
+              height: Math.random() * 2 + 1 + 'px',
+              top: Math.random() * 100 + '%',
+              left: Math.random() * 100 + '%',
+              animationDelay: Math.random() * 5 + 's',
+              animationDuration: Math.random() * 3 + 2 + 's'
+            }}
+          ></div>
+        ))}
       </div>
 
-      <div className="relative z-10 max-w-4xl text-center" data-aos="fade-up">
+      {/* Floating Interactive Planets using the actual MP4 files */}
+      <div className="absolute inset-0 pointer-events-auto">
+        <Planet 
+          name="EARTH"
+          videoSrc={earthVideo} 
+          className="top-[15%] left-[5%] md:left-[10%] w-48 h-48 md:w-64 md:h-64" 
+          delay="0s" 
+        />
+        <Planet 
+          name="JUPITER"
+          videoSrc={jupiterVideo} 
+          className="bottom-[10%] right-[2%] md:right-[10%] w-64 h-64 md:w-96 md:h-96" 
+          delay="2s" 
+        />
+        <Planet 
+          name="THE MOON"
+          videoSrc={moonVideo} // Falling back to earth video if moon video is missing
+          className="top-[45%] right-[20%] md:right-[30%] w-24 h-24 md:w-32 md:h-32" 
+          delay="4s" 
+        />
+      </div>
+
+      <div className="relative z-10 max-w-4xl text-center bg-primary/40 backdrop-blur-sm p-8 rounded-3xl border border-white/5" data-aos="fade-up">
         <h2 className="text-4xl md:text-6xl font-space font-bold text-white mb-8 text-shadow-glow uppercase">
           Welcome to the Cosmos
         </h2>

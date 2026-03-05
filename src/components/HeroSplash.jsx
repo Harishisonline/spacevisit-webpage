@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import sateliteImg from "../assets/satelite1.jpg";
 import moonImg from "../assets/moon-surface-hd.png";
+import rocketImg from "../assets/rocket.png";
 
 const HeroSplash = () => {
   const [launched, setLaunched] = useState(false);
@@ -30,30 +30,25 @@ const HeroSplash = () => {
         
         <button 
           onClick={handleLaunch}
-          className="relative px-8 py-3 bg-accent text-white font-space font-bold rounded-full text-xl transition-all duration-300 hover:scale-105 hover:bg-highlight box-shadow-glow overflow-hidden group"
+          className={`relative px-8 py-3 bg-accent text-white font-space font-bold rounded-full text-xl transition-all duration-300 hover:scale-105 hover:bg-highlight box-shadow-glow overflow-hidden group ${launched ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
         >
           <span className="relative z-10">Get Started</span>
           <div className="absolute inset-0 h-full w-full bg-white/20 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-out z-0"></div>
         </button>
       </div>
 
-      {/* Rocket */}
-      <div className={`absolute bottom-[20%] z-30 transition-transform ${launched ? 'animate-launch' : 'animate-float'}`}>
-        <div className="relative w-24 h-48 flex flex-col items-center">
-          {/* Simple CSS Rocket representation or image */}
-          <div className="w-12 h-32 bg-gray-200 rounded-t-full relative z-10">
-            <div className="w-6 h-6 bg-secondary rounded-full mx-auto mt-6 border-2 border-accent"></div>
-          </div>
-          {/* Rocket Wings */}
-          <div className="absolute bottom-16 w-24 flex justify-between z-0">
-            <div className="w-6 h-12 bg-accent rounded-bl-full"></div>
-            <div className="w-6 h-12 bg-accent rounded-br-full"></div>
-          </div>
-          {/* Flame */}
-          {launched && (
-            <div className="w-8 h-16 bg-gradient-to-t from-transparent via-orange-500 to-yellow-300 rounded-b-full animate-flame origin-top"></div>
-          )}
-        </div>
+      {/* Rocket Image rising from bottom */}
+      <div 
+        className={`absolute z-30 transition-all duration-[1500ms] ease-in-out flex flex-col items-center ${
+          launched ? 'bottom-[100vh] scale-100 opacity-100' : '-bottom-[50vh] scale-75 opacity-0'
+        }`}
+      >
+        <img src={rocketImg} alt="Rocket" className="w-32 md:w-48 object-contain" />
+        
+        {/* Flame Trail attached to the bottom of the image */}
+        {launched && (
+          <div className="w-8 h-32 md:w-12 md:h-48 bg-gradient-to-t from-transparent via-orange-500 to-yellow-300 rounded-b-full animate-flame origin-top -mt-4 blur-sm"></div>
+        )}
       </div>
     </div>
   );
