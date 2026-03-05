@@ -67,7 +67,7 @@ const HeroSplash = () => {
           </div>
           
           {/* Fins */}
-          <div className="absolute bottom-6 w-32 flex justify-between z-0 pointer-events-none">
+          <div className="absolute bottom-6 w-[8.5rem] flex justify-between z-0 pointer-events-none">
             <div className="w-8 h-16 bg-gray-500 rounded-tl-[100%] rounded-bl-md transform origin-right -skew-y-[20deg] shadow-lg"></div>
             <div className="w-8 h-16 bg-gray-500 rounded-tr-[100%] rounded-br-md transform origin-left skew-y-[20deg] shadow-lg"></div>
           </div>
