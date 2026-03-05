@@ -99,13 +99,13 @@
 
 /* Planet Texture Mapping */
 @keyframes spin-texture {
-  from { background-position: 0 0; }
+  from { background-position: 0% 0; }
   to { background-position: 200% 0; }
 }
 
 .planet-texture {
-  background-size: auto 100%;
-  animation: spin-texture 30s linear infinite;
+  background-size: 200% 100%;
+  animation: spin-texture 20s linear infinite;
 }
 /* Galaxy Swirl */
 @keyframes swirl {

@@ -78,39 +78,58 @@ const PlanetModal = ({ planetId, onClose }) => {
             {planet.name} ANATOMY
           </h3>
           
-          <div className="relative w-48 h-48 md:w-64 md:h-64 flex items-center justify-center">
-            {/* The outer realistic crust slice */}
+          <div className="relative w-48 h-48 md:w-64 md:h-64 flex items-center justify-center perspective-[1000px]">
+            
+            {/* Base Background Sphere to complete the gap */}
+            <div 
+              className="absolute w-full h-full rounded-full shadow-inner opacity-40 z-0"
+              style={{ backgroundColor: planet.color }}
+            ></div>
+
+            {/* Left Hemisphere (Crust) */}
             <div 
               className="absolute w-full h-full rounded-full planet-texture shadow-[inset_-20px_-20px_40px_rgba(0,0,0,0.9)] transition-all duration-1000 ease-out z-50 flex items-center justify-center"
               style={{
                 backgroundImage: `url(${import.meta.env.BASE_URL}${planet.texture})`,
-                transform: `translateX(${animateLayers ? '-40px' : '0px'}) rotateY(${animateLayers ? '-30deg' : '0deg'}) scale(${animateLayers ? 0.9 : 1})`,
-                clipPath: animateLayers ? 'polygon(0 0, 50% 0, 50% 100%, 0 100%)' : 'none',
+                transform: `translateX(${animateLayers ? '-50px' : '0px'}) rotateY(${animateLayers ? '-45deg' : '0deg'}) scale(${animateLayers ? 0.9 : 1})`,
+                clipPath: 'polygon(0 0, 50% 0, 50% 100%, 0 100%)',
               }}
             ></div>
 
-            {/* The internal core layers */}
+            {/* Right Hemisphere (Crust) */}
+            <div 
+              className="absolute w-full h-full rounded-full planet-texture shadow-[inset_-20px_-20px_40px_rgba(0,0,0,0.9)] transition-all duration-1000 ease-out z-50 flex items-center justify-center"
+              style={{
+                backgroundImage: `url(${import.meta.env.BASE_URL}${planet.texture})`,
+                transform: `translateX(${animateLayers ? '130px' : '0px'}) rotateY(${animateLayers ? '45deg' : '0deg'}) scale(${animateLayers ? 0.9 : 1})`,
+                clipPath: 'polygon(50% 0, 100% 0, 100% 100%, 50% 100%)',
+              }}
+            ></div>
+
+            {/* The internal core layers stacked like bowls inside the gap */}
             {planet.layers.map((layer, index) => {
-              const size = 100 - (index * 20); // 100%, 80%, 60%, 40%
-              // Only offset the inner layers to the right
-              const xOffset = animateLayers ? 20 + (index * 15) : 0; 
+              if (index === 0) return null; // Skip crust since it's the hemispheres
+
+              const size = 100 - (index * 20); // 80%, 60%, 40%
+              // Offset the inner layers incrementally
+              const xOffset = animateLayers ? -30 + (index * 30) : 0; 
               
               return (
                 <div 
                   key={index}
-                  className="absolute rounded-full border border-black/50 shadow-inner flex items-center justify-center transition-all duration-1000 ease-out"
+                  className="absolute rounded-full border-r border-black/40 shadow-[inset_10px_0_20px_rgba(0,0,0,0.8)] flex items-center justify-center transition-all duration-1000 ease-out"
                   style={{
                     width: `${size}%`,
                     height: `${size}%`,
-                    background: index === 0 ? '#111' : `radial-gradient(circle at center, ${planet.color}, #111)`, // Dark outer mantle, bright inner
-                    transform: `translateX(${xOffset}px) rotateY(${animateLayers ? '20deg' : '0deg'}) scale(${animateLayers ? 0.9 : 1})`,
+                    background: index === planet.layers.length - 1 ? '#fffae6' : `radial-gradient(circle at 70% center, ${planet.color}, #111)`, 
+                    transform: `translateX(${xOffset}px) rotateY(${animateLayers ? '-30deg' : '0deg'}) scale(${animateLayers ? 0.9 : 1})`,
                     opacity: animateLayers ? 1 : 0,
                     zIndex: 40 - index
                   }}
                 >
                   {animateLayers && (
-                    <div className="absolute w-full border-t border-dashed border-white/30" style={{ transform: 'translateX(100%)', width: '40px', right: 0 }}>
-                      <span className="text-[10px] md:text-xs font-space font-bold opacity-70 tracking-widest absolute -right-2 translate-x-full -top-2 whitespace-nowrap">
+                    <div className="absolute h-0 border-t border-white/50" style={{ right: '50%', width: '60px', top: '20%', transform: `rotate(-30deg)` }}>
+                      <span className="text-[9px] md:text-xs font-space font-bold opacity-90 tracking-widest absolute -left-2 -translate-x-full -top-3 whitespace-nowrap bg-black/50 px-1 rounded">
                         {layer.name}
                       </span>
                     </div>
