@@ -6,6 +6,7 @@ const planetsData = {
     name: "EARTH",
     color: "#00f2fe",
     texture: "textures/earth.jpg",
+    splitImg: "anatomy/earth-split.jpg",
     layers: [
       { name: "Crust", radius: "0 - 70 km", temp: "Ambient to 1000°C", comp: "Silicate rock, Oxygen, Silicon" },
       { name: "Mantle", radius: "70 - 2890 km", temp: "1000°C to 3700°C", comp: "Solid silicate rock" },
@@ -17,6 +18,7 @@ const planetsData = {
     name: "JUPITER",
     color: "#fda085",
     texture: "textures/jupiter.jpg",
+    splitImg: "anatomy/jupiter-split.jpg",
     layers: [
       { name: "Atmosphere", radius: "Outer 50 km", temp: "-145°C", comp: "Hydrogen, Helium, Ammonia clouds" },
       { name: "Liquid Mantle", radius: "50 - 21000 km", temp: "Up to 10,000°C", comp: "Liquid Hydrogen" },
@@ -28,6 +30,7 @@ const planetsData = {
     name: "THE MOON",
     color: "#8ec5fc",
     texture: "textures/moon.jpg",
+    splitImg: "anatomy/moon-split.jpg",
     layers: [
       { name: "Crust", radius: "0 - 50 km", temp: "-173°C to 127°C", comp: "Oxygen, Silicon, Magnesium" },
       { name: "Mantle", radius: "50 - 1350 km", temp: "Unknown (Solid)", comp: "Olivine, Pyroxene" },
@@ -69,7 +72,7 @@ const PlanetModal = ({ planetId, onClose }) => {
           <X size={28} />
         </button>
 
-        {/* Left Side: Realistic Texture Slice Splitting */}
+        {/* Left Side: Static Split Image with Fade In */}
         <div className="flex-1 flex flex-col items-center justify-center min-h-[300px] border-b md:border-b-0 md:border-r border-white/10 pb-8 md:pb-0 md:pr-8">
           <h3 
             className="text-3xl font-space font-bold mb-12 tracking-widest uppercase"
@@ -78,65 +81,17 @@ const PlanetModal = ({ planetId, onClose }) => {
             {planet.name} ANATOMY
           </h3>
           
-          <div className="relative w-48 h-48 md:w-64 md:h-64 flex items-center justify-center perspective-[1000px]">
-            
-            {/* Base Background Sphere to complete the gap */}
-            <div 
-              className="absolute w-full h-full rounded-full shadow-inner opacity-40 z-0"
-              style={{ backgroundColor: planet.color }}
-            ></div>
-
-            {/* Left Hemisphere (Crust) */}
-            <div 
-              className="absolute w-full h-full rounded-full planet-texture shadow-[inset_-20px_-20px_40px_rgba(0,0,0,0.9)] transition-all duration-1000 ease-out z-50 flex items-center justify-center"
+          <div className="relative w-full max-w-[300px] flex items-center justify-center">
+            <img 
+              src={`${import.meta.env.BASE_URL}${planet.splitImg}`} 
+              alt={`${planet.name} Anatomy`}
+              className="w-full h-auto object-contain transition-all duration-1000 ease-out"
               style={{
-                backgroundImage: `url(${import.meta.env.BASE_URL}${planet.texture})`,
-                transform: `translateX(${animateLayers ? '-50px' : '0px'}) rotateY(${animateLayers ? '-45deg' : '0deg'}) scale(${animateLayers ? 0.9 : 1})`,
-                clipPath: 'polygon(0 0, 50% 0, 50% 100%, 0 100%)',
+                opacity: animateLayers ? 1 : 0,
+                transform: `scale(${animateLayers ? 1 : 0.9}) translateY(${animateLayers ? 0 : 20}px)`,
+                filter: `drop-shadow(0 0 20px ${planet.color}40)`
               }}
-            ></div>
-
-            {/* Right Hemisphere (Crust) */}
-            <div 
-              className="absolute w-full h-full rounded-full planet-texture shadow-[inset_-20px_-20px_40px_rgba(0,0,0,0.9)] transition-all duration-1000 ease-out z-50 flex items-center justify-center"
-              style={{
-                backgroundImage: `url(${import.meta.env.BASE_URL}${planet.texture})`,
-                transform: `translateX(${animateLayers ? '130px' : '0px'}) rotateY(${animateLayers ? '45deg' : '0deg'}) scale(${animateLayers ? 0.9 : 1})`,
-                clipPath: 'polygon(50% 0, 100% 0, 100% 100%, 50% 100%)',
-              }}
-            ></div>
-
-            {/* The internal core layers stacked like bowls inside the gap */}
-            {planet.layers.map((layer, index) => {
-              if (index === 0) return null; // Skip crust since it's the hemispheres
-
-              const size = 100 - (index * 20); // 80%, 60%, 40%
-              // Offset the inner layers incrementally
-              const xOffset = animateLayers ? -30 + (index * 30) : 0; 
-              
-              return (
-                <div 
-                  key={index}
-                  className="absolute rounded-full border-r border-black/40 shadow-[inset_10px_0_20px_rgba(0,0,0,0.8)] flex items-center justify-center transition-all duration-1000 ease-out"
-                  style={{
-                    width: `${size}%`,
-                    height: `${size}%`,
-                    background: index === planet.layers.length - 1 ? '#fffae6' : `radial-gradient(circle at 70% center, ${planet.color}, #111)`, 
-                    transform: `translateX(${xOffset}px) rotateY(${animateLayers ? '-30deg' : '0deg'}) scale(${animateLayers ? 0.9 : 1})`,
-                    opacity: animateLayers ? 1 : 0,
-                    zIndex: 40 - index
-                  }}
-                >
-                  {animateLayers && (
-                    <div className="absolute h-0 border-t border-white/50" style={{ right: '50%', width: '60px', top: '20%', transform: `rotate(-30deg)` }}>
-                      <span className="text-[9px] md:text-xs font-space font-bold opacity-90 tracking-widest absolute -left-2 -translate-x-full -top-3 whitespace-nowrap bg-black/50 px-1 rounded">
-                        {layer.name}
-                      </span>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+            />
           </div>
         </div>
 
