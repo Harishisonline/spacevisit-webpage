@@ -28,7 +28,7 @@ const planetsData = {
   },
   moon: {
     name: "THE MOON",
-    color: "#8ec5fc",
+    color: "#e0e0e0",
     texture: "textures/moon.jpg",
     splitImg: "anatomy/moon-split.jpg",
     layers: [
